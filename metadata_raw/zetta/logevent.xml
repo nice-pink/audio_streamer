@@ -1,0 +1,24 @@
+<LogEvent UniversalIdentifier="c92f7cfb-0a0d-ed11-80f8-44a842416c23" LogEventID="56743887" LogGroupID="3875551" Sequence="10" LogEventEntryTypeID="106" Description="Description" EntryValue1="0" EntryData="" ChainType="1" StatusCode="2" EditCode="0" ErrorCode="0" TimingType="1" IsFixed="false" DynamicType="1" AirStarttime="2022-08-02T14:23:49Z" AirStarttimeLocal="02.08.2022 16:23:49" AirStoptime="2022-08-02T14:27:01Z" AirStoptimeLocal="02.08.2022 16:27:01">
+  <LogGroup LogGroupID="3875551" LogGroupTypeID="101" LogID="89925" Sequence="16" Hour="16">
+    <LogHeader LogID="89925" LogTypeID="0" Date="2022-08-02T00:00:00.0000000+02:00" />
+  </LogGroup>
+  <AssetEvent>
+    <Asset AssetID="251211" AssetTypeID="1" Title="title" AssetTypeName="Song" PrimaryResourceID="380103" Comment="comment" OverrideChainType="0" PlaybackMethodID="0" BedTypeID="0" IgnorePitching="false" UniversalIdentifier="80544dca-58db-4c3e-92e3-ecb8d4add6fb" infoCreatedDate="2019-03-14T16:20:28.7570000+00:00" infoModifiedDate="2019-03-14T16:30:51.4370000+00:00" MetadataScope="1">
+      <Resource ResourceID="380103" ResourceTypeID="1" ResourceFile="\\192.168.21.10\ZettaStore\AUDIOSTORE\3\3~01 - Title (2017 Remastered Version).mp3" Length="195.6451" CheckSumMD5="2946452468355741831" Year="0" FileSize="7826354" StartOffset="0" UniversalIdentifier="92d874f5-1a4c-4675-b7e5-4dc6bd4610f7" FileMD5="AB76F7991E56FDAFC5B78F7847FA9EA8" infoCreatedDate="0001-01-01T00:00:00.0000000+00:00" infoModifiedDate="0001-01-01T00:00:00.0000000+00:00">
+        <Transition ResourceLength="0" Zetta_ResourceID="380103">
+          <PointOfInterestMarker ID="2983903" Position="0" Duration="7.9098" Value="0" POIType="6" />
+          <PointOfInterestMarker ID="2983904" Position="189.7442" Duration="0" Value="0" POIType="8" />
+          <PointOfInterestMarker ID="2983785" Position="194.9088" Duration="0.7363" Value="0" Details="" POIType="14" />
+          <VolumeMarker ID="2983788" Position="0" Level="1" />
+          <VolumeMarker ID="2983787" Position="195.606" Level="1" />
+          <VolumeMarker ID="2983902" Position="195.6451" Level="1" />
+        </Transition>
+      </Resource>
+      <Artist ArtistID="2607" ArtistTypeID="0" Name="Artist" />
+      <Album AlbumID="22475" Name="Radiator" />
+      <StationSpecific StationSpecificId="690505" UniversalIdentifier="944be62b-32fa-4b25-b149-82dc27564eb3" IsActive="true" Station="90er" StationID="28" StationUniversalIdentifier="625de098-c534-4e98-a70f-9fd7e4ba4d7e">
+        <Category CategoryID="952" Name="H2" AssetTypeID="1" CategoryGroup="H2 Rock2" LongName="Rock Sec" />
+      </StationSpecific>
+    </Asset>
+  </AssetEvent>
+</LogEvent>

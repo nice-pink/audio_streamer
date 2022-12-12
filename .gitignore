@@ -1,0 +1,16 @@
+.idea
+.DS_Store
+*/.DS_Store
+
+# python: Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# various
+*.pem
+env
+envsecrets
+
+test_files/
+*/test_files/

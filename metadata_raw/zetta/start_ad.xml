@@ -1,0 +1,20 @@
+<LogEvent UniversalIdentifier="c762616d-a7ec-45ee-af10-6dddfc63382d" LogEventID="56876217" LogGroupID="3875551" Sequence="9.5" LogEventEntryTypeID="106" Description="START_AD_30 - " EntryValue1="0" EntryData="" ChainType="1" StatusCode="2" EditCode="204" ErrorCode="0" DynamicType="1" AirStarttime="2022-08-02T14:23:48Z" AirStarttimeLocal="02.08.2022 16:23:48" AirStoptime="2022-08-02T14:23:49Z" AirStoptimeLocal="02.08.2022 16:23:49">
+  <LogGroup LogGroupID="3875551" LogGroupTypeID="101" LogID="89925" Sequence="16" Hour="16">
+    <LogHeader LogID="89925" LogTypeID="0" Date="2022-08-02T00:00:00.0000000+02:00" />
+  </LogGroup>
+  <AssetEvent>
+    <Asset AssetID="250469" AssetTypeID="3" Title="START_AD_30" AssetTypeName="Link" PrimaryResourceID="379134" Comment="Imported from GSelector" OverrideChainType="0" PlaybackMethodID="0" BedTypeID="0" IgnorePitching="false" UniversalIdentifier="bc266154-481b-4e16-bc07-644ef02d6e13" infoCreatedDate="2019-03-06T08:54:31.9430000+00:00" infoModifiedDate="2022-07-28T11:24:09.6770000+00:00" MetadataScope="1">
+      <Resource ResourceID="379134" ResourceTypeID="1" ResourceFile="\\192.168.21.10\ZettaStore\AUDIOSTORE\379\379134~HALBE SEKUNDE NICHTS.wav" Length="0.5401" CheckSumMD5="-287492913430293054" Year="0" FileSize="95312" StartOffset="0" UniversalIdentifier="7b455626-4744-44a0-8a46-b381fb7e3bac" FileMD5="C2958BEBB79E02FCD32ED8511B1183F1" infoCreatedDate="0001-01-01T00:00:00.0000000+00:00" infoModifiedDate="0001-01-01T00:00:00.0000000+00:00">
+        <Transition ResourceLength="0" Zetta_ResourceID="379134">
+          <PointOfInterestMarker ID="2978462" Position="0" Duration="0" Value="1" Details="" POIType="3" />
+          <PointOfInterestMarker ID="2978461" Position="0.2" Duration="0.3401" Value="0" POIType="14" />
+          <VolumeMarker ID="2978459" Position="0" Level="1" />
+          <VolumeMarker ID="2978460" Position="0.5401" Level="1" />
+        </Transition>
+      </Resource>
+      <StationSpecific StationSpecificId="1602126" UniversalIdentifier="940f4a65-a918-4f12-adc7-e5e5c99e46e2" IsActive="true" Station="90er" StationID="28" StationUniversalIdentifier="625de098-c534-4e98-a70f-9fd7e4ba4d7e">
+        <Category CategoryID="0" Name="" AssetTypeID="0" />
+      </StationSpecific>
+    </Asset>
+  </AssetEvent>
+</LogEvent>
