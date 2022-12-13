@@ -2,3 +2,6 @@ FROM alpine:3.17.0
 
 RUN apt install build-essential portaudio19-dev python3.10-dev python3-pyaudio
 RUN pip install pyaudio
+RUN pip install requests
+
+COPY . /src
