@@ -87,32 +87,40 @@ class ShoutcastDataHandler:
             handled_bytes = 1
             print('--- Found metadata. Index:', full_index, 'size:', self.current_metadata_block_size)
         data_size: int = len(data[start_index:])
-        # only metadata
+        
         if self.current_metadata_block_size == 0:
+            # metadata block of size = 0
             contains_full_metadata_block = True
-        elif self.metadata_index + data_size - handled_bytes < self.current_metadata_block_size:
+        elif self.metadata_index + data_size < self.current_metadata_block_size:
+            # data block is smaller than expected metadata block
             self.current_metadata += data[start_index:]
             self.metadata_index += data_size
             handled_bytes += data_size
             if len(self.current_metadata) == self.current_metadata_block_size:
                 contains_full_metadata_block = True
         else:
+            # complete metadata block
             metadata_bytes = self.current_metadata_block_size - self.metadata_index
             self.current_metadata += data[start_index:metadata_bytes]
             contains_full_metadata_block = True
             handled_bytes += metadata_bytes
             self.metadata_index += metadata_bytes
 
+        # reset for next metadata block
         if contains_full_metadata_block:
             if self.keep_data:
                 self.metadata.append(self.current_metadata)
-            print('Current metadata:\n', self.current_metadata.decode("utf-8"))
-            print('Last parsed metadata:\n', self.last_metadata.decode("utf-8"))
-            # ShoutcastDataHandler.print_metadata(self.current_metadata)
+            print('Current metadata:')
+            ShoutcastDataHandler.print_metadata(self.current_metadata)
+            time_ago: str = "0"
+            if self.last_received_metadata:
+                time_ago = str(int(time.time()-self.last_received_metadata))
+            print('Last parsed metadata (' + time_ago + ' sec ago):')
+            ShoutcastDataHandler.print_metadata(self.last_metadata)
             if self.current_metadata:
                 self.last_metadata = self.current_metadata
+                self.last_received_metadata = time.time()
             self.current_metadata = bytearray()
-            self.last_received_metadata = time.time()
             self.metadata_index = 0
             self.audio_index = 0
 
@@ -120,8 +128,7 @@ class ShoutcastDataHandler:
 
     @staticmethod
     def print_metadata(metadata: bytearray) -> None:
-        print(metadata.decode("utf-8"))
-        # try:
-        #     print(metadata.decode("utf-8"))
-        # except Exception as exception:
-        #     print(exception)
+        try:
+            print(metadata.decode("utf-8"))
+        except Exception as exception:
+            print(exception)
