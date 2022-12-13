@@ -17,7 +17,7 @@ Everything needed for pure (audio) data and shoutcast/icecast is already contain
 
 Terminal A:
 ```
-python3 -m data_streamer ~/sweep.mp3 127.0.0.1 9222
+python3 -m data_streamer test_files/sweep_5sec.mp3 127.0.0.1 9222
 ```
 
 Terminal B:

@@ -12,9 +12,9 @@ class DataReceiver:
 
     def run(self) -> None:
         self.socket_connector.open_socket(self.is_server)
-        self.receive_audio()
+        self.receive_data()
 
-    def receive_audio(self) -> None:
+    def receive_data(self) -> None:
         print('Receive data.')
         
         data: bytearray = bytearray()
@@ -39,4 +39,3 @@ class DataReceiver:
 
         self.socket_connector.close()
         print('Socket closed')
-        os._exit(1)
