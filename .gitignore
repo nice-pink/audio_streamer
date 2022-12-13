@@ -12,5 +12,5 @@ __pycache__/
 env
 envsecrets
 
-test_files/
-*/test_files/
+test_files/*
+*/test_files/*
