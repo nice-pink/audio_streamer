@@ -4,11 +4,11 @@ import time
 
 class DataReceiver:
 
-    def __init__(self, port: int, is_server: bool, data_handler = None) -> None:
+    def __init__(self, port: int, host_ip: str, is_server: bool, data_handler = None) -> None:
         self.port: int = port
         self.is_server: bool = is_server
         self.data_handler = data_handler
-        self.socket_connector: SocketConnector = SocketConnector(port)
+        self.socket_connector: SocketConnector = SocketConnector(port, host_ip)
 
     def run(self) -> None:
         self.socket_connector.open_socket(self.is_server)

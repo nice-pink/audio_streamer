@@ -6,9 +6,9 @@ import time
 
 class PyAudioReceiver:
 
-    def __init__(self, port: int) -> None:
+    def __init__(self, port: int, host_ip: str) -> None:
         self.port: int = port
-        self.socket_client: SocketClient = SocketClient(self.port)
+        self.socket_client: SocketClient = SocketClient(self.port, host_ip)
 
     def run(self) -> None:
         self.open_socket()

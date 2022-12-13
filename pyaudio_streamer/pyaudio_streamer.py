@@ -6,9 +6,9 @@ import struct
 
 class PyAudioStreamer:
 
-    def __init__(self, port: int, audio_filepath: str) -> None:
+    def __init__(self, port: int, host_ip: str, audio_filepath: str) -> None:
         self.port: int = port
-        self.socket_server: SocketServer = SocketServer(self.port)
+        self.socket_server: SocketServer = SocketServer(self.port, host_ip)
         self.audio_filepath: str = audio_filepath
 
     def run(self) -> None:

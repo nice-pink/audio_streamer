@@ -2,13 +2,12 @@ import socket
 
 class SocketServer:
 
-    def __init__(self, port: int) -> None:
+    def __init__(self, port: int, host_ip: str) -> None:
         self.port: int = port
         # self.host_name: str = socket.gethostname()
         # self.host_ip: str = socket.gethostbyname(self.host_name)
-        self.host_name: str = 'localhost'
-        self.host_ip: str = '127.0.0.1'
-        print('Host name:', self.host_name, ', Host IP:', self.host_ip)
+        self.host_ip: str = host_ip
+        print('Host IP:', self.host_ip)
         self.socket = socket.socket()
         self.client_socket = None
 
@@ -36,13 +35,12 @@ class SocketServer:
 
 class SocketClient:
 
-    def __init__(self, port: int) -> None:
+    def __init__(self, port: int, host_ip: str) -> None:
         self.port: int = port
         # self.host_name: str = socket.gethostname()
         # self.host_ip: str = socket.gethostbyname(self.host_name)
-        self.host_name: str = 'localhost'
-        self.host_ip: str = '127.0.0.1'
-        print('Host name:', self.host_name, ', Host IP:', self.host_ip)
+        self.host_ip: str = host_ip
+        print('Host IP:', self.host_ip)
         self.socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 
     def connect(self):
@@ -60,16 +58,17 @@ class SocketClient:
 
 class SocketConnector:
 
-    def __init__(self, port: int) -> None:
+    def __init__(self, port: int, host_ip: str) -> None:
         self.port: int = port
+        self.host_ip: str = host_ip
         self.socket = None
 
     def open_socket(self, is_server: bool) -> None:
         if is_server:
-            self.socket: SocketServer = SocketServer(self.port)
+            self.socket: SocketServer = SocketServer(self.port, self.host_ip)
             self.__open_socket_server()
         else:
-            self.socket: SocketClient = SocketClient(self.port)
+            self.socket: SocketClient = SocketClient(self.port, self.host_ip)
             self.__open_socket_client()
 
     def __open_socket_server(self) -> None:

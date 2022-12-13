@@ -6,7 +6,7 @@ import time
 
 class DataStreamer:
 
-    def __init__(self, port: int, data: StreamData, is_server: bool, data_enricher = None, companion_sender = None) -> None:
+    def __init__(self, port: int, host_ip: str, data: StreamData, is_server: bool, data_enricher = None, companion_sender = None) -> None:
         self.port: int = port
         self.is_server = is_server
         self.data_enricher = data_enricher
@@ -16,7 +16,7 @@ class DataStreamer:
         if companion_sender:
             print('Has companion sender of type', type(companion_sender))
         self.data: StreamData = data
-        self.socket_connector: SocketConnector = SocketConnector(port)
+        self.socket_connector: SocketConnector = SocketConnector(port, host_ip)
 
     def run(self) -> None:
         self.socket_connector.open_socket(self.is_server)
