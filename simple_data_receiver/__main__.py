@@ -1,4 +1,4 @@
-from data_receiver.data_receiver import DataReceiver
+from lib.data_receiver import DataReceiver
 import sys
 
 if __name__ == '__main__':

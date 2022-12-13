@@ -13,6 +13,7 @@ class ShoutcastDataEnricher:
         self.handeled_size: int = 0
         self.add_header: bool = add_header
         self.did_add_header: bool = False
+        self.enriched: bool = False
 
     def handle(self, data: bytearray) -> bytearray:
         if self.add_header and not self.did_add_header:
@@ -20,17 +21,21 @@ class ShoutcastDataEnricher:
             data = icecast_header + data
             self.current_block_index -= len(icecast_header)
             print('Added header')
+            self.enriched = True
             self.did_add_header = True
         data_size: int = len(data)
+        
         # don't add metadata to block
         if self.current_block_index + data_size < self.metaint:
             self.current_block_index += data_size
             self.handeled_size += data_size
+            self.enriched = False
             return data
         
         metadata: bytes = ShoutcastData.get_shoutcast_metadata(self.id, str(self.metadata_index), 8)
         metadata_size: int = len(metadata)
         self.metadata_index += 1
+        self.enriched = True
 
         # append metadata
         if self.current_block_index + data_size == self.metaint:

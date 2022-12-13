@@ -1,12 +1,19 @@
 from lib.socket_connector import SocketConnector
 from lib.stream_data import StreamData
 import lib.byte_time_helper as byte_time_helper
-import os
+from typing import List
 import time
 
 class DataStreamer:
 
-    def __init__(self, port: int, host_ip: str, data: StreamData, is_server: bool, data_enricher = None, companion_sender = None) -> None:
+    def __init__(self,
+                 port: int,
+                 host_ip: str,
+                 data: StreamData,
+                 is_server: bool,
+                 data_enricher = None,
+                 companion_sender = None,
+                 metrics_handler = None) -> None:
         self.port: int = port
         self.is_server = is_server
         self.data_enricher = data_enricher
@@ -17,6 +24,7 @@ class DataStreamer:
             print('Has companion sender of type', type(companion_sender))
         self.data: StreamData = data
         self.socket_connector: SocketConnector = SocketConnector(port, host_ip)
+        self.metrics_handler = metrics_handler
 
     def run(self) -> None:
         self.socket_connector.open_socket(self.is_server)
@@ -35,13 +43,25 @@ class DataStreamer:
             if index == self.data.portions:
                 if self.companion_sender:
                     self.companion_sender.send(sent_file_index, end=True)
+                    
+                    # increase companion metrics
+                    if self.metrics_handler:
+                        self.metrics_handler.increase({'id':'companion_sent','value':1})
+
                 index = 0
                 sent_file_index += 1
                 print(sent_file_index, 'times sent file.')
-                # break
+                
+                # increase cycle metrics
+                if self.metrics_handler:
+                    self.metrics_handler.increase({'id':'cycles','value':1})
             
             if index == 0 and self.companion_sender:
                 self.companion_sender.send(sent_file_index)
+                
+                # increase companion metrics
+                if self.metrics_handler:
+                    self.metrics_handler.increase({'id':'companion_sent','value':1})
 
             now: time = time.time()
 
@@ -53,6 +73,11 @@ class DataStreamer:
             # if data enricher -> enrich data
             if self.data_enricher:
                 data = self.data_enricher.handle(self.data.file_portions[index])
+                
+                # increase counter if data was enriched
+                if self.data_enricher.enriched and self.metrics_handler:
+                    self.metrics_handler.increase({'id':'enriched','value':1})
+
             else:
                 data = self.data.file_portions[index]
             
@@ -60,6 +85,10 @@ class DataStreamer:
             bytes_sent = self.socket_connector.socket.send(data)
             if bytes_sent > 0:
                 bytes_ahead += bytes_sent
+                
+                # bytes metric
+                if self.metrics_handler:
+                    self.metrics_handler.increase({'id':'bytes_sent','value':1})
 
                 # wait to keep data output rate
                 if bytes_ahead > 0:
@@ -73,3 +102,7 @@ class DataStreamer:
 
         self.socket_connector.close()
         print('Done sending data.')
+
+    @staticmethod
+    def get_supported_metric() -> List[str]:
+        return ['bytes_sent', 'cycles', 'companion_sent', 'enriched']

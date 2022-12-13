@@ -3,10 +3,15 @@ import time
 
 class DataHttpReceiver:
 
-    def __init__(self, url: str, headers: dict, data_handler = None) -> None:
+    def __init__(self,
+                 url: str,
+                 headers: dict,
+                 data_handler = None,
+                 metrics_handler = None) -> None:
         self.url: str = url
         self.headers: dict = headers
         self.data_handler = data_handler
+        self.metrics_handler = metrics_handler
 
     def run(self) -> None:
         self.receive_data()

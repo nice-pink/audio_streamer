@@ -1,4 +1,4 @@
-from data_receiver.data_receiver import DataReceiver
+from lib.data_receiver import DataReceiver
 from lib.data_handler.shoutcast import ShoutcastDataHandler
 import sys
 

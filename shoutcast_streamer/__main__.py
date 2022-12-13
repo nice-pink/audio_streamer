@@ -1,4 +1,4 @@
-from data_streamer.data_streamer import DataStreamer
+from lib.data_streamer import DataStreamer
 from lib.stream_data import StreamData
 from lib.data_enricher.shoutcast import ShoutcastDataEnricher
 
