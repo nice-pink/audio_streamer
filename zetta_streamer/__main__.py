@@ -16,15 +16,21 @@ if __name__ == '__main__':
     port: int = int(sys.argv[3])
     metadata_receiver_url: str = sys.argv[4]
     metadata_receiver_port: str = sys.argv[5]
-    data: StreamData = StreamData(filepath, 320000)
-    data.prepare()
-
+    
+    # update companion url
     if not metadata_receiver_url.startswith('http'):
         metadata_receiver_url = 'http://' + metadata_receiver_url
     if metadata_receiver_port:
         metadata_receiver_url += ':' + metadata_receiver_port
 
+    # prepare stream data
+    data: StreamData = StreamData(filepath, 320000)
+    data.prepare()
+    
+    # enricher
     shoutcast_data_enricher: ShoutcastDataEnricher = ShoutcastDataEnricher('shoutcast_stream', add_header=True)
+    
+    # companion
     zetta_metadata_sender: ZettaMetadataSender = ZettaMetadataSender(id='id', url=metadata_receiver_url, file_duration=5.0)
 
     # metrics handler
@@ -33,11 +39,13 @@ if __name__ == '__main__':
                 {'id': 'companion_sent', 'name': 'zetta_metadata_sent', 'description': 'Total zetta metadata blocks sent.'},
                 {'id': 'cycles', 'name': 'cycles', 'description': 'Total repitiontions of sending file.'}]
     metrics_handler: MetricsHandler = MetricsHandler(counters, metric_prefix='e2e_zetta_streamer_')
+    metrics_handler.run()
 
     # metadata test
     # zetta_metadata: ZettaMetadata = ZettaMetadata()
     # zetta_metadata.build(1, [ZettaLogEventType.Default, ZettaLogEventType.LastStarted], 5.0)
 
+    # streamer
     data_streamer: DataStreamer = DataStreamer(port,
                                                host_ip,
                                                data,

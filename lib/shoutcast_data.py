@@ -36,18 +36,18 @@ Access-Control-Allow-Methods: GET, OPTIONS, SOURCE, PUT, HEAD, STATS
 
     @staticmethod
     def get_shoutcast_metadata(id: str, title: str, encoded_size: int) -> bytes:
-        # add metdata block size (/16)
+        # add metadata block size (/16)
         metadata: bytearray = bytearray([encoded_size])
         # add metadata string
         metadata_block_size: int = encoded_size * 16 + 1
-        metadata_string: str = 'StreamTitle=' + id + ';' + title
+        metadata_string: str = "StreamTitle='" + id + ':' + title + "';"
         metadata += ShoutcastData.bytes_from(metadata_string)
-        metdata_size: int = len(metadata)
-        if metdata_size > metadata_block_size:
-            print('Error: Metadata dont fully fit the metadata block.', metdata_size > metadata_block_size)
+        metadata_size: int = len(metadata)
+        if metadata_size > metadata_block_size:
+            print('Error: Metadata dont fully fit the metadata block.', metadata_size > metadata_block_size)
             return metadata[0:metadata_block_size+1]
         # add zero padding
-        padding: int = metadata_block_size - metdata_size
+        padding: int = metadata_block_size - metadata_size
         metadata += bytes(padding)
         return bytes(metadata)
 

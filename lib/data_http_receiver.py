@@ -1,5 +1,6 @@
 import requests
 import time
+from typing import List
 
 class DataHttpReceiver:
 
@@ -36,4 +37,12 @@ class DataHttpReceiver:
 
                 if self.data_handler:
                     self.data_handler.handle(line)
+
+                    # metrics
+                    if self.metrics_handler:
+                        metrics: List[str] = self.data_handler.get_metrics()
+                        for metric in metrics:
+                            self.metrics_handler.increase(metric)
+                            print('inc', metric)
+
         print('Connection closed')

@@ -1,4 +1,4 @@
-import os
+from typing import List
 from lib.socket_connector import SocketConnector
 import time
 
@@ -40,8 +40,16 @@ class DataReceiver:
 
                 if self.data_handler:
                     self.data_handler.handle(data)
+                    if self.metrics_handler:
+                        metrics: List[str] = self.data_handler.get_metrics()
+                        for metric in metrics:
+                            self.metrics_handler.increase(metric)
             except:
                 break
 
         self.socket_connector.close()
         print('Socket closed')
+
+    @staticmethod
+    def get_supported_metric() -> List[str]:
+        return ['bytes_received', 'cycles']

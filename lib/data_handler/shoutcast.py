@@ -3,7 +3,7 @@ import time
 
 class ShoutcastDataHandler:
 
-    def __init__(self, metaint: int = 16000, keep_data: bool = False, remove_header: bool = True) -> None:
+    def __init__(self, metaint: int = 16000, keep_data: bool = False, remove_header: bool = False) -> None:
         self.keep_data: bool = keep_data
         self.metaint: int = metaint
         self.handled_size: int = 0
@@ -18,6 +18,7 @@ class ShoutcastDataHandler:
         self.remove_header: bool = remove_header
         self.found_header: bool = False
         self.split: bytes = bytes('\r\n\r\n'.encode('utf-8'))
+        self.metrics: List[dict] = []
 
     def update(self, info: dict) -> None:
         print('')
@@ -46,6 +47,9 @@ class ShoutcastDataHandler:
                 print('Skip header')
             else:
                 return
+        self.metrics.clear()
+        self.found_empty_metadata = False
+        self.found_metadata = False
         data_size: int = len(data)
         current_start: int = 0
         while current_start < data_size:
@@ -91,6 +95,7 @@ class ShoutcastDataHandler:
         if self.current_metadata_block_size == 0:
             # metadata block of size = 0
             contains_full_metadata_block = True
+            self.add_empty_metadata_found()
         elif self.metadata_index + data_size < self.current_metadata_block_size:
             # data block is smaller than expected metadata block
             self.current_metadata += data[start_index:]
@@ -103,6 +108,12 @@ class ShoutcastDataHandler:
             metadata_bytes = self.current_metadata_block_size - self.metadata_index
             self.current_metadata += data[start_index:metadata_bytes]
             contains_full_metadata_block = True
+            
+            if ShoutcastDataHandler.is_metadata_empty(self.current_metadata):
+                self.add_empty_metadata_found()
+            else:
+                self.add_metadata_found()
+
             handled_bytes += metadata_bytes
             self.metadata_index += metadata_bytes
 
@@ -126,9 +137,31 @@ class ShoutcastDataHandler:
 
         return handled_bytes
 
+    def get_metrics(self) -> List[str]:
+        return self.metrics
+
+    @staticmethod
+    def is_metadata_empty(metadata: bytes) -> bool:
+        metadata_string: str = metadata.decode('utf-8')
+        metadata_stripped: str = metadata_string.strip(";'\x00").strip('"')
+        metadata_stripped = metadata_stripped.replace('StreamTitle=', '')
+        if len(metadata_stripped) == 0:
+            return True
+        return False
+
+    def add_empty_metadata_found(self):
+        self.metrics.append({'id': 'found_empty_metadata', 'value':1})
+
+    def add_metadata_found(self):
+        self.metrics.append({'id': 'found_metadata', 'value':1})
+
     @staticmethod
     def print_metadata(metadata: bytearray) -> None:
         try:
             print(metadata.decode("utf-8"))
         except Exception as exception:
             print(exception)
+
+    @staticmethod
+    def get_supported_metric() -> List[str]:
+        return ['found_metadata', 'found_empty_metadata']
