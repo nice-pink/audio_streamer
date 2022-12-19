@@ -24,24 +24,3 @@ Terminal B:
 ```
 python3 -m data_receiver 127.0.0.1 9222
 ```
-
-## Example 2 - Stream and receive shoutcast with additional metadata endpoint:
-
-1. Open three terminals.
-2. Start `zetta_streamer` and `shoutcast_receiver` with same `port`. Define `filepath` as streamer parameter. As additional metadata are sent to an additional http server, add metadata receiver url and optionally a port.
-3. Start `http_receiver`.
-
-Terminal A:
-```
-python3 -m zetta_streamer test_files/sweep_5sec.mp3 "127.0.0.1" 9222 "127.0.0.1" 8000
-```
-
-Terminal B:
-```
-python3 -m shoutcast_receiver "127.0.0.1" 9222
-```
-
-Terminal C:
-```
-python3 -m http_receiver "127.0.0.1" 8000
-```

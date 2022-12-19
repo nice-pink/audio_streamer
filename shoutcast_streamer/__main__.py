@@ -21,9 +21,8 @@ if __name__ == '__main__':
     # metrics handler
     counters = [{'id': 'bytes_sent', 'name': 'bytes_sent', 'description': 'Total bytes handled.'},
                 {'id': 'enriched', 'name': 'icy_metadata_sent', 'description': 'Total icy metadata blocks sent.'},
-                {'id': 'companion_sent', 'name': 'zetta_metadata_sent', 'description': 'Total zetta metadata blocks sent.'},
                 {'id': 'cycles', 'name': 'cycles', 'description': 'Total repitiontions of sending file.'}]
-    metrics_handler: MetricsHandler = MetricsHandler(counters, metric_prefix='e2e_zetta_streamer_')
+    metrics_handler: MetricsHandler = MetricsHandler(counters, metric_prefix='e2e_shoutcast_streamer_')
     metrics_handler.run()
     
     # data enricher
